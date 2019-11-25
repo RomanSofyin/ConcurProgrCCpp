@@ -1,5 +1,6 @@
 #include <cstdlib>
 
+/* Следующий вариант и ему подобные считаются читерством
 class SmallAllocator {
 public:
         void *Alloc(unsigned int Size) {
@@ -11,6 +12,15 @@ public:
         void Free(void *Pointer) {
                 return free(Pointer);
         };
+};*/
+
+class SmallAllocator {
+private:
+        char Memory[1048576];
+public:
+        void *Alloc(unsigned int Size) {};
+        void *ReAlloc(void *Pointer, unsigned int Size) {};
+        void Free(void *Pointer) {};
 };
 
 int main(int argc, char **argv) {

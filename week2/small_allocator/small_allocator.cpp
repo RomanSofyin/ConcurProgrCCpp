@@ -1,5 +1,7 @@
 #include <cstdlib>
+#include <iostream>
 
+using namespace std;
 /* Следующий вариант и ему подобные считаются читерством
 class SmallAllocator {
 public:
@@ -17,10 +19,17 @@ public:
 class SmallAllocator {
 private:
         char Memory[1048576];
+        std::vector<pair<void*,int>> freeChunks;	// вектор свободных непрерывных блоков памяти
 public:
-        void *Alloc(unsigned int Size) {};
-        void *ReAlloc(void *Pointer, unsigned int Size) {};
-        void Free(void *Pointer) {};
+		// каждый выделенный блок памяти в начале будет содержать свою длину
+        void *Alloc(unsigned int Size) {
+        	// ищём первый свободдный блок памяти достаточного размера
+        	//	для этого обходим freeChunks, проверяя длину каждого
+        	// возвращаем найденный блок
+        	return NULL;
+        };
+        void *ReAlloc(void *Pointer, unsigned int Size) {return NULL;};
+        void Free(void *Pointer) {return;};
 };
 
 int main(int argc, char **argv) {

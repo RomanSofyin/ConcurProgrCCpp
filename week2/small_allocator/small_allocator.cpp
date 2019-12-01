@@ -82,6 +82,7 @@ public:
 		}
         
 		void Free(void *Pointer) {
+			cout << "Free(): request accepted" << endl;
 			size_t memIndex = (static_cast<char*>(Pointer) - ctrlDataLen) - &Memory[0];
 			for(auto it = freeChunks.begin(); it != freeChunks.end(); it++) {
 				if(memIndex = it->first) {

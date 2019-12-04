@@ -50,7 +50,7 @@ public:
 					void * res = (void *) &Memory[it->first + ctrlDataLen];
 					// проверить случай, когда найденный свободный блок "идеально" подходит по длине под размер запрашиваемого блока
 					// в этом случае не нужно создавать новый ChunkDescr
-					if (it->second > occupiedChunkLen) {
+					if (it->second > (occupiedChunkLen+ctrlDataLen+1)) {
 						auto arg1 = it->first + occupiedChunkLen;
 						auto arg2 = it->second - occupiedChunkLen;
 						/* Why this doesn't work ? ? ? 
@@ -62,7 +62,8 @@ public:
 						cout << "Alloc(): erasing old chunk" << endl;						
 						freeChunks.erase(it);
 						cout << "Alloc(): constructing new chunk" << endl;
-						freeChunks.emplace(it, arg1, arg2);
+						//freeChunks.emplace(it, arg1, arg2);
+						freeChunks.push_back(make_pair(arg1, arg2));
 					}
 					cout << "Alloc(): returning res" << endl;
 					return res;
@@ -84,12 +85,9 @@ public:
 		void Free(void *Pointer) {
 			cout << "Free(): request accepted" << endl;
 			size_t memIndex = (static_cast<char*>(Pointer) - ctrlDataLen) - &Memory[0];
-			for(auto it = freeChunks.begin(); it != freeChunks.end(); it++) {
-				if(memIndex = it->first) {
-					freeChunks.erase(it);
-				}
-			}
-			
+			size_t chunkLen = static_cast<size_t>(Memory[memIndex]) + ctrlDataLen;
+			freeChunks.push_back(make_pair(memIndex, chunkLen));
+			// it needs to perform chunks merge here
 			return;
 		}
 };

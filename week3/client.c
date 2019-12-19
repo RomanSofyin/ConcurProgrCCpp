@@ -14,5 +14,13 @@ int main(int argc, char **argv) {
 
     connect(Socket, (struct sockaddr *)(&SockAddr), sizeof(SockAddr));
 
+    char Buffer[] = "PING";
+    send(Socket, Buffer, 4, MSG_NOSIGNAL);
+    recv(Socket, Buffer, 4, MSG_NOSIGNAL);
+
+    shutdown(Socket, SHUT_RDWR);
+
+    printf("%s\n", Buffer);
+    
     return 0;
 }

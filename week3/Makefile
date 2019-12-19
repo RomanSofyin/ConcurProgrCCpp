@@ -1,4 +1,4 @@
-all: build_server
+all: build_server build_client
 
 build_server:
 # -ggdb - добавить отладочную информацию

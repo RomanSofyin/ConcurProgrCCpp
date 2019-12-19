@@ -4,6 +4,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <unistd.h>         // close()
+#include <string.h>
 
 int main (int argc, char **argv) {
     int MasterSocket = socket(
@@ -23,9 +24,17 @@ int main (int argc, char **argv) {
     while(1) {
         int SlaveSocket = accept(MasterSocket, 0, 0);
 
-        char Buffer[5] = {0,0,0,0,0};
+        #define BufLen 4
+        char Buffer[BufLen+1] = {0,0,0,0,0};
         
-        recv(SlaveSocket, Buffer, 4, MSG_NOSIGNAL);
+        unsigned int counter = 0;
+        while(counter < BufLen) {
+            int res = recv(SlaveSocket, Buffer + counter, 4 - counter, MSG_NOSIGNAL);
+            if(res > 0) counter += res;
+        }
+        
+        send(SlaveSocket, Buffer, 4, MSG_NOSIGNAL);
+
         shutdown(SlaveSocket, SHUT_RDWR);
         close(SlaveSocket);
 

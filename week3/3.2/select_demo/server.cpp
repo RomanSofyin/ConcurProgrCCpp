@@ -7,6 +7,7 @@
 #include <netinet/in.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <cerrno>
 
 int set_nonblock(int fd) {
     	int flags;
@@ -47,15 +48,31 @@ int main(int argc, char **argv) {
         // найти макс дескриптор+1
         int Max = std::max(MasterSocket, *std::max_element(SlaveSockets.begin(),SlaveSockets.end()));
 
-        // . . .
+        // select usage
         select(Max+1, &Set, NULL, NULL, NULL);
         // в Set будут выставлены '1' на местах, которые соответствуют сокетам, по которым было выполнено чтение
-        for(auto Iter = SlaveSocket.begin(); Inter != SlaveSocket.end(); Iter++) {
+        for(auto Iter = SlaveSockets.begin(); Iter != SlaveSockets.end(); Iter++) {
             if(FD_ISSET(*Iter,&Set)) {
                 static char Buffer[1024];
                 // можно читать в весь буффер, т.к. SlaveSockets неблокирующий
                 int RecvSize = recv(*Iter, Buffer, 1024, MSG_NOSIGNAL);
+                // Если пришло событие о том, что мы можем читать из сокета, а было прочитано 0 байт, то
+                // или произошла ошибка
+                // или соединение закрыто
+                if((RecvSize == 0) && (errno != EAGAIN)) {
+                    shutdown(*Iter, SHUT_RDWR);
+                    close(*Iter);
+                    SlaveSockets.erase(Iter);
+                } else if (RecvSize != 0) { // если что-то принято
+                    // реализуем echo
+                    send(*Iter, Buffer, RecvSize, MSG_NOSIGNAL);
+                }
             }
+        }
+        if (FD_ISSET(MasterSocket, &Set)) {
+            int SlaveSocket = accept(MasterSocket,0,0);
+            set_nonblock(SlaveSocket);
+            SlaveSockets.insert(SlaveSocket);
         }
     }
     

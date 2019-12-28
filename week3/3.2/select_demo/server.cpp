@@ -23,7 +23,7 @@ int set_nonblock(int fd) {
 
 int main(int argc, char **argv) {
     int MasterSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-    std::set<int> SlaveSockets;
+    std::set<int> SlaveSockets; // набор дескрипторов slave-сокетов
     
     struct sockaddr_in SockAddr;
     SockAddr.sin_family = AF_INET;
@@ -48,7 +48,15 @@ int main(int argc, char **argv) {
         int Max = std::max(MasterSocket, *std::max_element(SlaveSockets.begin(),SlaveSockets.end()));
 
         // . . .
-
+        select(Max+1, &Set, NULL, NULL, NULL);
+        // в Set будут выставлены '1' на местах, которые соответствуют сокетам, по которым было выполнено чтение
+        for(auto Iter = SlaveSocket.begin(); Inter != SlaveSocket.end(); Iter++) {
+            if(FD_ISSET(*Iter,&Set)) {
+                static char Buffer[1024];
+                // можно читать в весь буффер, т.к. SlaveSockets неблокирующий
+                int RecvSize = recv(*Iter, Buffer, 1024, MSG_NOSIGNAL);
+            }
+        }
     }
     
     return 0;

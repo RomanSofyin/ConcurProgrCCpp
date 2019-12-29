@@ -12,7 +12,7 @@
 int set_nonblock(int fd) {
     	int flags;
 #if defined(O_NONBLOCK)
-	/* считать флаги, выставить новый флаг O_NONBLOCK, записать новые флаги*/	
+	/* считать флаги, выставить новый флаг O_NONBLOCK, записать новые флаги */	
 	if(-1 == (flags = fcntl(fd, F_GETFL, 0)))
 		flags = 0;
 	return fcntl(fd, F_SETFL, flags | O_NONBLOCK);
@@ -37,35 +37,45 @@ int main(int argc, char **argv) {
     listen(MasterSocket, SOMAXCONN);
 
     while(true) {
+        /*
+         * Для select'a нужно подготовить fd_set так, чтобы были выставлены биты в позициях, соответствующих сокетам, которые нужно мониторить на возможность чтения(наш случай), записи или ошибок(3й пар-р?)
+         */
         fd_set Set; // 1024 бита
-        FD_ZERO(&Set);
-        FD_SET(MasterSocket, &Set); // добавить MasterSocket в Set
-        // добавить все SlaveSocket в Set
+        FD_ZERO(&Set);                  
+        FD_SET(MasterSocket, &Set); // добавить MasterSocket в Set, чтобы иметь возможность принимать соединения
+        // добавить все slave-сокеты из SlaveSockets в Set
         for(auto Iter = SlaveSockets.begin(); Iter != SlaveSockets.end(); Iter++) { 
             FD_SET(*Iter, &Set);
         }
 
-        // найти макс дескриптор+1
+        // найти дескриптор сокета (Master или Slave) с максимальным номером
         int Max = std::max(MasterSocket, *std::max_element(SlaveSockets.begin(),SlaveSockets.end()));
 
         // select usage
-        select(Max+1, &Set, NULL, NULL, NULL);
-        // в Set будут выставлены '1' на местах, которые соответствуют сокетам, по которым было выполнено чтение
+        select(Max+1,   // значение максимального дескритора среди след. трёх параметров +1
+            &Set,       // ds_set дескрипторов, которые будут отслеживаться сервисом/системным вызовом select на их доступность для чтения
+            NULL,       // ds_set дескрипторов, которые . . . для записи
+            NULL,       // ds_set дескрипторов, The  file  descriptors  in "exceptfds"  will  be watched for exceptional conditions
+            NULL);      // timeout, в течении которого будет выполняться select
+        /*
+         * По итогу select'a, в Set будут выставлены '1' на местах, которые соответствуют сокетам, по которым можно выполнить чтение
+         */
+
+        // Проверяем выставлен ли бит в Set в позиции, соответствующей какому-либо из имеющихся slave-сокетов (т.е. соединение уже установлено)
         for(auto Iter = SlaveSockets.begin(); Iter != SlaveSockets.end(); Iter++) {
             if(FD_ISSET(*Iter,&Set)) {
+                // Если бит выставлен, значит пришло событие о том, что сокет доступен для чтения
                 static char Buffer[1024];
-                // можно читать в весь буффер, т.к. SlaveSockets неблокирующий
-                int RecvSize = recv(*Iter, Buffer, 1024, MSG_NOSIGNAL);
-                // Если пришло событие о том, что мы можем читать из сокета, а было прочитано 0 байт, то
-                // или произошла ошибка
-                // или соединение закрыто
+                int RecvSize = recv(*Iter, Buffer, 1024, MSG_NOSIGNAL); // *note: можно читать сразу весь буффер, так как все сокеты перед добавлением в SlaveSockets делаются неблокирующими
                 if((RecvSize == 0) && (errno != EAGAIN)) {
-                    shutdown(*Iter, SHUT_RDWR);
-                    close(*Iter);
-                    SlaveSockets.erase(Iter);
+                    // Мы в ситуации, когда у нас нет реально прочитанных данных
+                    //  - было прочитано 0 байт
+                    //  - или "EAGAIN" - there is no data available right now, try again later
+                    shutdown(*Iter, SHUT_RDWR); // разрываем предварительно установленное соединение
+                    close(*Iter);               // закрываем соответствующий сокет
+                    SlaveSockets.erase(Iter);   // удалям дескриптор сокета, описывающий установленное соединение
                 } else if (RecvSize != 0) { // если что-то принято
-                    // реализуем echo
-                    send(*Iter, Buffer, RecvSize, MSG_NOSIGNAL);
+                    send(*Iter, Buffer, RecvSize, MSG_NOSIGNAL);    // реализуем echo
                 }
             }
         }

@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <errno.h>
 
-#define UNIX_SOCK_PATH "/tmp/echo.sock"
+#define UNIX_SOCK_PATH "/tmp/echo.sock7"
 
 static  void echo_read_cb(struct bufferevent *bev, void *ctx) {
     struct evbuffer *input  = bufferevent_get_input(bev);
@@ -78,6 +78,11 @@ int main(int argc, char **argv) {
        LEV_OPT_CLOSE_ON_FREE | LEV_OPT_REUSEABLE,
        -1,                                             /* backlog */
        (struct sockaddr *)&sun, sizeof(sun));
+    
+    if (!listener) {
+        perror("Couldn't create listener");
+        return 1;
+    }
 
     fprintf(stderr, "blabla 150\n");
 

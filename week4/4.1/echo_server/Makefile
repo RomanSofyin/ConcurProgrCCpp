@@ -1,2 +1,2 @@
 all:
-	gcc -o echo_server echo_server.cpp -levent
+	g++ -o echo_server echo_server.cpp -levent

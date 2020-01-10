@@ -2,6 +2,7 @@
     "files.associations": {
         "utility": "cpp",
         "ostream": "cpp",
-        "types.h": "c"
+        "types.h": "c",
+        "ev.h": "c"
     }
 }

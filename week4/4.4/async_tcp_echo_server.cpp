@@ -1,3 +1,8 @@
+/*
+ * The code is based on
+ * https://github.com/doublethinkco/boost/blob/master/libs/asio/example/cpp03/echo/async_tcp_echo_server.cpp
+ */
+
 #include <cstdlib>
 #include <iostream>
 #include <boost/bind.hpp>

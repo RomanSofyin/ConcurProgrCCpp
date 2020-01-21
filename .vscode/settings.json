@@ -4,6 +4,7 @@
         "ostream": "cpp",
         "types.h": "c",
         "ev.h": "c",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "signal.h": "c"
     }
 }

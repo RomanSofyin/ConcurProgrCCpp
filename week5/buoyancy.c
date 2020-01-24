@@ -19,6 +19,7 @@ int main(int argc, char **argv) {
         /* parent code goes here */
         int fd = open( "./pid", O_WRONLY|O_CREAT, 0);
         write(fd, &pid, sizeof(pid));
+        close(fd);
         printf("Parent process - completes\n");
     }
     return 0;

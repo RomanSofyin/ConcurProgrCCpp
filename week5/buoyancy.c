@@ -5,6 +5,9 @@
 #include <signal.h>
 #include <stdio.h>
 
+/* Нет нужды создавать здесь доченый процесс.
+   Когда будет время попробовать, вариант без fork() с getpid() и аналогичными signal() вызовами. */
+
 int main(int argc, char **argv) {
     pid_t pid = fork();
     if (pid == -1) {

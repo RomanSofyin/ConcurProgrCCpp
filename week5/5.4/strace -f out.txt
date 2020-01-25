@@ -1,0 +1,412 @@
+roman@DESKTOP-AFO4O38:/mnt/c/Users/romas/repos/ConcurProgrCCpp/week5/5.4$ strace -f ./who_wc
+execve("./who_wc", ["./who_wc"], 0x7fffe0713cc8 /* 25 vars */) = 0
+brk(NULL)                               = 0x7fffb9a44000
+access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or directory)
+access("/etc/ld.so.preload", R_OK)      = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+fstat(3, {st_mode=S_IFREG|0644, st_size=55453, ...}) = 0
+mmap(NULL, 55453, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7f858a448000
+close(3)                                = 0
+access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\260\34\2\0\0\0\0\0"..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0755, st_size=2030544, ...}) = 0
+mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f858a440000
+mmap(NULL, 4131552, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7f8589e00000
+mprotect(0x7f8589fe7000, 2097152, PROT_NONE) = 0
+mmap(0x7f858a1e7000, 24576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1e7000) = 0x7f858a1e7000
+mmap(0x7f858a1ed000, 15072, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x7f858a1ed000
+close(3)                                = 0
+arch_prctl(ARCH_SET_FS, 0x7f858a4414c0) = 0
+mprotect(0x7f858a1e7000, 16384, PROT_READ) = 0
+mprotect(0x7f858a800000, 4096, PROT_READ) = 0
+mprotect(0x7f858a427000, 4096, PROT_READ) = 0
+munmap(0x7f858a448000, 55453)           = 0
+pipe([3, 4])                            = 0
+clone(strace: Process 1858 attached
+child_stack=NULL, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x7f858a441790) = 1858
+[pid  1858] close(1 <unfinished ...>
+[pid  1857] close(0)                    = 0
+[pid  1858] <... close resumed> )       = 0
+[pid  1857] dup2(3, 0 <unfinished ...>
+[pid  1858] dup2(4, 1 <unfinished ...>
+[pid  1857] <... dup2 resumed> )        = 0
+[pid  1858] <... dup2 resumed> )        = 1
+[pid  1857] close(3 <unfinished ...>
+[pid  1858] close(4 <unfinished ...>
+[pid  1857] <... close resumed> )       = 0
+[pid  1858] <... close resumed> )       = 0
+[pid  1857] close(4)                    = 0
+[pid  1858] close(3 <unfinished ...>
+[pid  1857] execve("/home/roman/.vscode-server/bin/26076a4de974ead31f97692a0d32f90d735645c0/bin/wc", ["wc", "-l"], 0x7fffc12b5b88 /* 25 vars */ <unfinished ...>
+[pid  1858] <... close resumed> )       = 0
+[pid  1857] <... execve resumed> )      = -1 ENOENT (No such file or directory)
+[pid  1858] execve("/home/roman/.vscode-server/bin/26076a4de974ead31f97692a0d32f90d735645c0/bin/who", ["who"], 0x7fffc12b5b88 /* 25 vars */ <unfinished ...>
+[pid  1857] execve("/usr/local/sbin/wc", ["wc", "-l"], 0x7fffc12b5b88 /* 25 vars */ <unfinished ...>
+[pid  1858] <... execve resumed> )      = -1 ENOENT (No such file or directory)
+[pid  1857] <... execve resumed> )      = -1 ENOENT (No such file or directory)
+[pid  1857] execve("/usr/local/bin/wc", ["wc", "-l"], 0x7fffc12b5b88 /* 25 vars */ <unfinished ...>
+[pid  1858] execve("/usr/local/sbin/who", ["who"], 0x7fffc12b5b88 /* 25 vars */ <unfinished ...>
+[pid  1857] <... execve resumed> )      = -1 ENOENT (No such file or directory)
+[pid  1858] <... execve resumed> )      = -1 ENOENT (No such file or directory)
+[pid  1857] execve("/usr/sbin/wc", ["wc", "-l"], 0x7fffc12b5b88 /* 25 vars */ <unfinished ...>
+[pid  1858] execve("/usr/local/bin/who", ["who"], 0x7fffc12b5b88 /* 25 vars */ <unfinished ...>
+[pid  1857] <... execve resumed> )      = -1 ENOENT (No such file or directory)
+[pid  1857] execve("/usr/bin/wc", ["wc", "-l"], 0x7fffc12b5b88 /* 25 vars */ <unfinished ...>
+[pid  1858] <... execve resumed> )      = -1 ENOENT (No such file or directory)
+[pid  1858] execve("/usr/sbin/who", ["who"], 0x7fffc12b5b88 /* 25 vars */) = -1 ENOENT (No such file or directory)
+[pid  1857] <... execve resumed> )      = 0
+[pid  1858] execve("/usr/bin/who", ["who"], 0x7fffc12b5b88 /* 25 vars */ <unfinished ...>
+[pid  1857] brk(NULL)                   = 0x7fffe853c000
+[pid  1857] access("/etc/ld.so.nohwcap", F_OK) = -1 ENOENT (No such file or directory)
+[pid  1857] access("/etc/ld.so.preload", R_OK) = -1 ENOENT (No such file or directory)
+[pid  1857] openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+[pid  1857] fstat(3, {st_mode=S_IFREG|0644, st_size=55453, ...}) = 0
+[pid  1857] mmap(NULL, 55453, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7f2ac3edc000
+[pid  1857] close(3)                    = 0
+[pid  1857] access("/etc/ld.so.nohwcap", F_OK) = -1 ENOENT (No such file or directory)
+[pid  1857] openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC <unfinished ...>
+[pid  1858] <... execve resumed> )      = 0
+[pid  1858] brk(NULL <unfinished ...>
+[pid  1857] <... openat resumed> )      = 3
+[pid  1857] read(3,  <unfinished ...>
+[pid  1858] <... brk resumed> )         = 0x7fffd01b9000
+[pid  1857] <... read resumed> "\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\260\34\2\0\0\0\0\0"..., 832) = 832
+[pid  1858] access("/etc/ld.so.nohwcap", F_OK <unfinished ...>
+[pid  1857] fstat(3, {st_mode=S_IFREG|0755, st_size=2030544, ...}) = 0
+[pid  1857] mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0 <unfinished ...>
+[pid  1858] <... access resumed> )      = -1 ENOENT (No such file or directory)
+[pid  1857] <... mmap resumed> )        = 0x7f2ac3ed0000
+[pid  1858] access("/etc/ld.so.preload", R_OK <unfinished ...>
+[pid  1857] mmap(NULL, 4131552, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0 <unfinished ...>
+[pid  1858] <... access resumed> )      = -1 ENOENT (No such file or directory)
+[pid  1857] <... mmap resumed> )        = 0x7f2ac3800000
+[pid  1857] mprotect(0x7f2ac39e7000, 2097152, PROT_NONE <unfinished ...>
+[pid  1858] openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC <unfinished ...>
+[pid  1857] <... mprotect resumed> )    = 0
+[pid  1857] mmap(0x7f2ac3be7000, 24576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1e7000 <unfinished ...>
+[pid  1858] <... openat resumed> )      = 3
+[pid  1857] <... mmap resumed> )        = 0x7f2ac3be7000
+[pid  1858] fstat(3,  <unfinished ...>
+[pid  1857] mmap(0x7f2ac3bed000, 15072, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0 <unfinished ...>
+[pid  1858] <... fstat resumed> {st_mode=S_IFREG|0644, st_size=55453, ...}) = 0
+[pid  1857] <... mmap resumed> )        = 0x7f2ac3bed000
+[pid  1858] mmap(NULL, 55453, PROT_READ, MAP_PRIVATE, 3, 0 <unfinished ...>
+[pid  1857] close(3 <unfinished ...>
+[pid  1858] <... mmap resumed> )        = 0x7fe1d106a000
+[pid  1857] <... close resumed> )       = 0
+[pid  1858] close(3 <unfinished ...>
+[pid  1857] arch_prctl(ARCH_SET_FS, 0x7f2ac3ed1540) = 0
+[pid  1858] <... close resumed> )       = 0
+[pid  1858] access("/etc/ld.so.nohwcap", F_OK <unfinished ...>
+[pid  1857] mprotect(0x7f2ac3be7000, 16384, PROT_READ <unfinished ...>
+[pid  1858] <... access resumed> )      = -1 ENOENT (No such file or directory)
+[pid  1857] <... mprotect resumed> )    = 0
+[pid  1858] openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC <unfinished ...>
+[pid  1857] mprotect(0x7f2ac4209000, 4096, PROT_READ) = 0
+[pid  1857] mprotect(0x7f2ac3e27000, 4096, PROT_READ) = 0
+[pid  1857] munmap(0x7f2ac3edc000, 55453 <unfinished ...>
+[pid  1858] <... openat resumed> )      = 3
+[pid  1857] <... munmap resumed> )      = 0
+[pid  1858] read(3, "\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\260\34\2\0\0\0\0\0"..., 832) = 832
+[pid  1858] fstat(3, {st_mode=S_IFREG|0755, st_size=2030544, ...}) = 0
+[pid  1857] brk(NULL)                   = 0x7fffe853c000
+[pid  1857] brk(0x7fffe855d000 <unfinished ...>
+[pid  1858] mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0 <unfinished ...>
+[pid  1857] <... brk resumed> )         = 0x7fffe855d000
+[pid  1858] <... mmap resumed> )        = 0x7fe1d1060000
+[pid  1857] openat(AT_FDCWD, "/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC <unfinished ...>
+[pid  1858] mmap(NULL, 4131552, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0 <unfinished ...>
+[pid  1857] <... openat resumed> )      = 3
+[pid  1857] fstat(3,  <unfinished ...>
+[pid  1858] <... mmap resumed> )        = 0x7fe1d0a00000
+[pid  1857] <... fstat resumed> {st_mode=S_IFREG|0644, st_size=1683056, ...}) = 0
+[pid  1858] mprotect(0x7fe1d0be7000, 2097152, PROT_NONE <unfinished ...>
+[pid  1857] mmap(NULL, 1683056, PROT_READ, MAP_PRIVATE, 3, 0 <unfinished ...>
+[pid  1858] <... mprotect resumed> )    = 0
+[pid  1857] <... mmap resumed> )        = 0x7f2ac3c8c000
+[pid  1858] mmap(0x7fe1d0de7000, 24576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1e7000 <unfinished ...>
+[pid  1857] close(3 <unfinished ...>
+[pid  1858] <... mmap resumed> )        = 0x7fe1d0de7000
+[pid  1857] <... close resumed> )       = 0
+[pid  1858] mmap(0x7fe1d0ded000, 15072, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0 <unfinished ...>
+[pid  1857] openat(AT_FDCWD, "/usr/share/locale/locale.alias", O_RDONLY|O_CLOEXEC <unfinished ...>
+[pid  1858] <... mmap resumed> )        = 0x7fe1d0ded000
+[pid  1858] close(3)                    = 0
+[pid  1857] <... openat resumed> )      = 3
+[pid  1858] arch_prctl(ARCH_SET_FS, 0x7fe1d1061540 <unfinished ...>
+[pid  1857] fstat(3,  <unfinished ...>
+[pid  1858] <... arch_prctl resumed> )  = 0
+[pid  1857] <... fstat resumed> {st_mode=S_IFREG|0644, st_size=2995, ...}) = 0
+[pid  1857] read(3, "# Locale name alias data base.\n#"..., 512) = 512
+[pid  1857] read(3,  <unfinished ...>
+[pid  1858] mprotect(0x7fe1d0de7000, 16384, PROT_READ <unfinished ...>
+[pid  1857] <... read resumed> "See the\n# GNU General Public Lic"..., 512) = 512
+[pid  1858] <... mprotect resumed> )    = 0
+[pid  1857] read(3,  <unfinished ...>
+[pid  1858] mprotect(0x7fe1d140b000, 4096, PROT_READ <unfinished ...>
+[pid  1857] <... read resumed> "nd for the time being for\n# back"..., 512) = 512
+[pid  1857] read(3,  <unfinished ...>
+[pid  1858] <... mprotect resumed> )    = 0
+[pid  1857] <... read resumed> "hese lines were removed\n# becaus"..., 512) = 512
+[pid  1858] mprotect(0x7fe1d1027000, 4096, PROT_READ <unfinished ...>
+[pid  1857] read(3,  <unfinished ...>
+[pid  1858] <... mprotect resumed> )    = 0
+[pid  1857] <... read resumed> "8859-1\ngalego\t\tgl_ES.ISO-8859-1\n"..., 512) = 512
+[pid  1858] munmap(0x7fe1d106a000, 55453 <unfinished ...>
+[pid  1857] read(3,  <unfinished ...>
+[pid  1858] <... munmap resumed> )      = 0
+[pid  1857] <... read resumed> "O.ISO-8859-1 nb_NO.ISO-8859-1\nno"..., 512) = 435
+[pid  1857] read(3, "", 512)            = 0
+[pid  1857] close(3 <unfinished ...>
+[pid  1858] brk(NULL <unfinished ...>
+[pid  1857] <... close resumed> )       = 0
+[pid  1858] <... brk resumed> )         = 0x7fffd01b9000
+[pid  1858] brk(0x7fffd01da000 <unfinished ...>
+[pid  1857] openat(AT_FDCWD, "/usr/lib/locale/C.UTF-8/LC_IDENTIFICATION", O_RDONLY|O_CLOEXEC <unfinished ...>
+[pid  1858] <... brk resumed> )         = 0x7fffd01da000
+[pid  1858] openat(AT_FDCWD, "/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC <unfinished ...>
+[pid  1857] <... openat resumed> )      = 3
+[pid  1857] fstat(3,  <unfinished ...>
+[pid  1858] <... openat resumed> )      = 3
+[pid  1857] <... fstat resumed> {st_mode=S_IFREG|0644, st_size=252, ...}) = 0
+[pid  1857] mmap(NULL, 252, PROT_READ, MAP_PRIVATE, 3, 0 <unfinished ...>
+[pid  1858] fstat(3,  <unfinished ...>
+[pid  1857] <... mmap resumed> )        = 0x7f2ac3ee9000
+[pid  1857] close(3 <unfinished ...>
+[pid  1858] <... fstat resumed> {st_mode=S_IFREG|0644, st_size=1683056, ...}) = 0
+[pid  1857] <... close resumed> )       = 0
+[pid  1858] mmap(NULL, 1683056, PROT_READ, MAP_PRIVATE, 3, 0 <unfinished ...>
+[pid  1857] openat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gconv/gconv-modules.cache", O_RDONLY <unfinished ...>
+[pid  1858] <... mmap resumed> )        = 0x7fe1d0e8c000
+[pid  1858] close(3 <unfinished ...>
+[pid  1857] <... openat resumed> )      = 3
+[pid  1857] fstat(3, {st_mode=S_IFREG|0644, st_size=26376, ...}) = 0
+[pid  1857] mmap(NULL, 26376, PROT_READ, MAP_SHARED, 3, 0 <unfinished ...>
+[pid  1858] <... close resumed> )       = 0
+[pid  1857] <... mmap resumed> )        = 0x7f2ac3ee2000
+[pid  1857] close(3 <unfinished ...>
+[pid  1858] openat(AT_FDCWD, "/usr/share/locale/locale.alias", O_RDONLY|O_CLOEXEC <unfinished ...>
+[pid  1857] <... close resumed> )       = 0
+[pid  1857] openat(AT_FDCWD, "/usr/lib/locale/C.UTF-8/LC_MEASUREMENT", O_RDONLY|O_CLOEXEC <unfinished ...>
+[pid  1858] <... openat resumed> )      = 3
+[pid  1858] fstat(3,  <unfinished ...>
+[pid  1857] <... openat resumed> )      = 3
+[pid  1857] fstat(3,  <unfinished ...>
+[pid  1858] <... fstat resumed> {st_mode=S_IFREG|0644, st_size=2995, ...}) = 0
+[pid  1857] <... fstat resumed> {st_mode=S_IFREG|0644, st_size=23, ...}) = 0
+[pid  1857] mmap(NULL, 23, PROT_READ, MAP_PRIVATE, 3, 0 <unfinished ...>
+[pid  1858] read(3,  <unfinished ...>
+[pid  1857] <... mmap resumed> )        = 0x7f2ac3ee1000
+[pid  1857] close(3 <unfinished ...>
+[pid  1858] <... read resumed> "# Locale name alias data base.\n#"..., 512) = 512
+[pid  1857] <... close resumed> )       = 0
+[pid  1858] read(3,  <unfinished ...>
+[pid  1857] openat(AT_FDCWD, "/usr/lib/locale/C.UTF-8/LC_TELEPHONE", O_RDONLY|O_CLOEXEC <unfinished ...>
+[pid  1858] <... read resumed> "See the\n# GNU General Public Lic"..., 512) = 512
+[pid  1858] read(3,  <unfinished ...>
+[pid  1857] <... openat resumed> )      = 3
+[pid  1857] fstat(3,  <unfinished ...>
+[pid  1858] <... read resumed> "nd for the time being for\n# back"..., 512) = 512
+[pid  1857] <... fstat resumed> {st_mode=S_IFREG|0644, st_size=47, ...}) = 0
+[pid  1857] mmap(NULL, 47, PROT_READ, MAP_PRIVATE, 3, 0 <unfinished ...>
+[pid  1858] read(3,  <unfinished ...>
+[pid  1857] <... mmap resumed> )        = 0x7f2ac3ee0000
+[pid  1857] close(3 <unfinished ...>
+[pid  1858] <... read resumed> "hese lines were removed\n# becaus"..., 512) = 512
+[pid  1857] <... close resumed> )       = 0
+[pid  1858] read(3,  <unfinished ...>
+[pid  1857] openat(AT_FDCWD, "/usr/lib/locale/C.UTF-8/LC_ADDRESS", O_RDONLY|O_CLOEXEC <unfinished ...>
+[pid  1858] <... read resumed> "8859-1\ngalego\t\tgl_ES.ISO-8859-1\n"..., 512) = 512
+[pid  1858] read(3,  <unfinished ...>
+[pid  1857] <... openat resumed> )      = 3
+[pid  1857] fstat(3,  <unfinished ...>
+[pid  1858] <... read resumed> "O.ISO-8859-1 nb_NO.ISO-8859-1\nno"..., 512) = 435
+[pid  1857] <... fstat resumed> {st_mode=S_IFREG|0644, st_size=131, ...}) = 0
+[pid  1857] mmap(NULL, 131, PROT_READ, MAP_PRIVATE, 3, 0 <unfinished ...>
+[pid  1858] read(3,  <unfinished ...>
+[pid  1857] <... mmap resumed> )        = 0x7f2ac3edf000
+[pid  1857] close(3 <unfinished ...>
+[pid  1858] <... read resumed> "", 512) = 0
+[pid  1857] <... close resumed> )       = 0
+[pid  1858] close(3 <unfinished ...>
+[pid  1857] openat(AT_FDCWD, "/usr/lib/locale/C.UTF-8/LC_NAME", O_RDONLY|O_CLOEXEC <unfinished ...>
+[pid  1858] <... close resumed> )       = 0
+[pid  1857] <... openat resumed> )      = 3
+[pid  1857] fstat(3,  <unfinished ...>
+[pid  1858] openat(AT_FDCWD, "/usr/lib/locale/C.UTF-8/LC_IDENTIFICATION", O_RDONLY|O_CLOEXEC <unfinished ...>
+[pid  1857] <... fstat resumed> {st_mode=S_IFREG|0644, st_size=62, ...}) = 0
+[pid  1857] mmap(NULL, 62, PROT_READ, MAP_PRIVATE, 3, 0 <unfinished ...>
+[pid  1858] <... openat resumed> )      = 3
+[pid  1857] <... mmap resumed> )        = 0x7f2ac3ede000
+[pid  1857] close(3 <unfinished ...>
+[pid  1858] fstat(3,  <unfinished ...>
+[pid  1857] <... close resumed> )       = 0
+[pid  1858] <... fstat resumed> {st_mode=S_IFREG|0644, st_size=252, ...}) = 0
+[pid  1857] openat(AT_FDCWD, "/usr/lib/locale/C.UTF-8/LC_PAPER", O_RDONLY|O_CLOEXEC <unfinished ...>
+[pid  1858] mmap(NULL, 252, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7fe1d1077000
+[pid  1857] <... openat resumed> )      = 3
+[pid  1857] fstat(3,  <unfinished ...>
+[pid  1858] close(3 <unfinished ...>
+[pid  1857] <... fstat resumed> {st_mode=S_IFREG|0644, st_size=34, ...}) = 0
+[pid  1857] mmap(NULL, 34, PROT_READ, MAP_PRIVATE, 3, 0 <unfinished ...>
+[pid  1858] <... close resumed> )       = 0
+[pid  1857] <... mmap resumed> )        = 0x7f2ac3edd000
+[pid  1857] close(3 <unfinished ...>
+[pid  1858] openat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gconv/gconv-modules.cache", O_RDONLY <unfinished ...>
+[pid  1857] <... close resumed> )       = 0
+[pid  1857] openat(AT_FDCWD, "/usr/lib/locale/C.UTF-8/LC_MESSAGES", O_RDONLY|O_CLOEXEC <unfinished ...>
+[pid  1858] <... openat resumed> )      = 3
+[pid  1857] <... openat resumed> )      = 3
+[pid  1857] fstat(3,  <unfinished ...>
+[pid  1858] fstat(3,  <unfinished ...>
+[pid  1857] <... fstat resumed> {st_mode=S_IFDIR|0755, st_size=512, ...}) = 0
+[pid  1857] close(3 <unfinished ...>
+[pid  1858] <... fstat resumed> {st_mode=S_IFREG|0644, st_size=26376, ...}) = 0
+[pid  1857] <... close resumed> )       = 0
+[pid  1857] openat(AT_FDCWD, "/usr/lib/locale/C.UTF-8/LC_MESSAGES/SYS_LC_MESSAGES", O_RDONLY|O_CLOEXEC <unfinished ...>
+[pid  1858] mmap(NULL, 26376, PROT_READ, MAP_SHARED, 3, 0) = 0x7fe1d1070000
+[pid  1857] <... openat resumed> )      = 3
+[pid  1857] fstat(3,  <unfinished ...>
+[pid  1858] close(3 <unfinished ...>
+[pid  1857] <... fstat resumed> {st_mode=S_IFREG|0644, st_size=48, ...}) = 0
+[pid  1857] mmap(NULL, 48, PROT_READ, MAP_PRIVATE, 3, 0 <unfinished ...>
+[pid  1858] <... close resumed> )       = 0
+[pid  1857] <... mmap resumed> )        = 0x7f2ac3edc000
+[pid  1857] close(3 <unfinished ...>
+[pid  1858] openat(AT_FDCWD, "/usr/lib/locale/C.UTF-8/LC_MEASUREMENT", O_RDONLY|O_CLOEXEC <unfinished ...>
+[pid  1857] <... close resumed> )       = 0
+[pid  1857] openat(AT_FDCWD, "/usr/lib/locale/C.UTF-8/LC_MONETARY", O_RDONLY|O_CLOEXEC <unfinished ...>
+[pid  1858] <... openat resumed> )      = 3
+[pid  1858] fstat(3, {st_mode=S_IFREG|0644, st_size=23, ...}) = 0
+[pid  1857] <... openat resumed> )      = 3
+[pid  1857] fstat(3,  <unfinished ...>
+[pid  1858] mmap(NULL, 23, PROT_READ, MAP_PRIVATE, 3, 0 <unfinished ...>
+[pid  1857] <... fstat resumed> {st_mode=S_IFREG|0644, st_size=270, ...}) = 0
+[pid  1857] mmap(NULL, 270, PROT_READ, MAP_PRIVATE, 3, 0 <unfinished ...>
+[pid  1858] <... mmap resumed> )        = 0x7fe1d106f000
+[pid  1857] <... mmap resumed> )        = 0x7f2ac3edb000
+[pid  1858] close(3 <unfinished ...>
+[pid  1857] close(3 <unfinished ...>
+[pid  1858] <... close resumed> )       = 0
+[pid  1857] <... close resumed> )       = 0
+[pid  1858] openat(AT_FDCWD, "/usr/lib/locale/C.UTF-8/LC_TELEPHONE", O_RDONLY|O_CLOEXEC <unfinished ...>
+[pid  1857] openat(AT_FDCWD, "/usr/lib/locale/C.UTF-8/LC_COLLATE", O_RDONLY|O_CLOEXEC) = 3
+[pid  1857] fstat(3,  <unfinished ...>
+[pid  1858] <... openat resumed> )      = 3
+[pid  1857] <... fstat resumed> {st_mode=S_IFREG|0644, st_size=1516558, ...}) = 0
+[pid  1857] mmap(NULL, 1516558, PROT_READ, MAP_PRIVATE, 3, 0 <unfinished ...>
+[pid  1858] fstat(3,  <unfinished ...>
+[pid  1857] <... mmap resumed> )        = 0x7f2ac368d000
+[pid  1857] close(3 <unfinished ...>
+[pid  1858] <... fstat resumed> {st_mode=S_IFREG|0644, st_size=47, ...}) = 0
+[pid  1857] <... close resumed> )       = 0
+[pid  1858] mmap(NULL, 47, PROT_READ, MAP_PRIVATE, 3, 0 <unfinished ...>
+[pid  1857] openat(AT_FDCWD, "/usr/lib/locale/C.UTF-8/LC_TIME", O_RDONLY|O_CLOEXEC <unfinished ...>
+[pid  1858] <... mmap resumed> )        = 0x7fe1d106e000
+[pid  1858] close(3 <unfinished ...>
+[pid  1857] <... openat resumed> )      = 3
+[pid  1857] fstat(3,  <unfinished ...>
+[pid  1858] <... close resumed> )       = 0
+[pid  1857] <... fstat resumed> {st_mode=S_IFREG|0644, st_size=3360, ...}) = 0
+[pid  1857] mmap(NULL, 3360, PROT_READ, MAP_PRIVATE, 3, 0 <unfinished ...>
+[pid  1858] openat(AT_FDCWD, "/usr/lib/locale/C.UTF-8/LC_ADDRESS", O_RDONLY|O_CLOEXEC <unfinished ...>
+[pid  1857] <... mmap resumed> )        = 0x7f2ac3eda000
+[pid  1857] close(3)                    = 0
+[pid  1857] openat(AT_FDCWD, "/usr/lib/locale/C.UTF-8/LC_NUMERIC", O_RDONLY|O_CLOEXEC <unfinished ...>
+[pid  1858] <... openat resumed> )      = 3
+[pid  1858] fstat(3, {st_mode=S_IFREG|0644, st_size=131, ...}) = 0
+[pid  1857] <... openat resumed> )      = 3
+[pid  1857] fstat(3,  <unfinished ...>
+[pid  1858] mmap(NULL, 131, PROT_READ, MAP_PRIVATE, 3, 0 <unfinished ...>
+[pid  1857] <... fstat resumed> {st_mode=S_IFREG|0644, st_size=50, ...}) = 0
+[pid  1857] mmap(NULL, 50, PROT_READ, MAP_PRIVATE, 3, 0 <unfinished ...>
+[pid  1858] <... mmap resumed> )        = 0x7fe1d106d000
+[pid  1857] <... mmap resumed> )        = 0x7f2ac3ed9000
+[pid  1857] close(3 <unfinished ...>
+[pid  1858] close(3 <unfinished ...>
+[pid  1857] <... close resumed> )       = 0
+[pid  1858] <... close resumed> )       = 0
+[pid  1857] openat(AT_FDCWD, "/usr/lib/locale/C.UTF-8/LC_CTYPE", O_RDONLY|O_CLOEXEC <unfinished ...>
+[pid  1858] openat(AT_FDCWD, "/usr/lib/locale/C.UTF-8/LC_NAME", O_RDONLY|O_CLOEXEC <unfinished ...>
+[pid  1857] <... openat resumed> )      = 3
+[pid  1857] fstat(3,  <unfinished ...>
+[pid  1858] <... openat resumed> )      = 3
+[pid  1857] <... fstat resumed> {st_mode=S_IFREG|0644, st_size=199772, ...}) = 0
+[pid  1857] mmap(NULL, 199772, PROT_READ, MAP_PRIVATE, 3, 0 <unfinished ...>
+[pid  1858] fstat(3,  <unfinished ...>
+[pid  1857] <... mmap resumed> )        = 0x7f2ac3e9f000
+[pid  1857] close(3 <unfinished ...>
+[pid  1858] <... fstat resumed> {st_mode=S_IFREG|0644, st_size=62, ...}) = 0
+[pid  1857] <... close resumed> )       = 0
+[pid  1858] mmap(NULL, 62, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7fe1d106c000
+[pid  1857] openat(AT_FDCWD, "/usr/share/locale/C.UTF-8/LC_MESSAGES/coreutils.mo", O_RDONLY <unfinished ...>
+[pid  1858] close(3 <unfinished ...>
+[pid  1857] <... openat resumed> )      = -1 ENOENT (No such file or directory)
+[pid  1858] <... close resumed> )       = 0
+[pid  1857] openat(AT_FDCWD, "/usr/share/locale/C.utf8/LC_MESSAGES/coreutils.mo", O_RDONLY <unfinished ...>
+[pid  1858] openat(AT_FDCWD, "/usr/lib/locale/C.UTF-8/LC_PAPER", O_RDONLY|O_CLOEXEC <unfinished ...>
+[pid  1857] <... openat resumed> )      = -1 ENOENT (No such file or directory)
+[pid  1857] openat(AT_FDCWD, "/usr/share/locale/C/LC_MESSAGES/coreutils.mo", O_RDONLY <unfinished ...>
+[pid  1858] <... openat resumed> )      = 3
+[pid  1857] <... openat resumed> )      = -1 ENOENT (No such file or directory)
+[pid  1857] openat(AT_FDCWD, "/usr/share/locale-langpack/C.UTF-8/LC_MESSAGES/coreutils.mo", O_RDONLY <unfinished ...>
+[pid  1858] fstat(3,  <unfinished ...>
+[pid  1857] <... openat resumed> )      = -1 ENOENT (No such file or directory)
+[pid  1857] openat(AT_FDCWD, "/usr/share/locale-langpack/C.utf8/LC_MESSAGES/coreutils.mo", O_RDONLY <unfinished ...>
+[pid  1858] <... fstat resumed> {st_mode=S_IFREG|0644, st_size=34, ...}) = 0
+[pid  1857] <... openat resumed> )      = -1 ENOENT (No such file or directory)
+[pid  1857] openat(AT_FDCWD, "/usr/share/locale-langpack/C/LC_MESSAGES/coreutils.mo", O_RDONLY <unfinished ...>
+[pid  1858] mmap(NULL, 34, PROT_READ, MAP_PRIVATE, 3, 0 <unfinished ...>
+[pid  1857] <... openat resumed> )      = -1 ENOENT (No such file or directory)
+[pid  1858] <... mmap resumed> )        = 0x7fe1d106b000
+[pid  1857] fadvise64(0, 0, 0, POSIX_FADV_SEQUENTIAL) = 0
+[pid  1857] read(0,  <unfinished ...>
+[pid  1858] close(3)                    = 0
+[pid  1858] openat(AT_FDCWD, "/usr/lib/locale/C.UTF-8/LC_MESSAGES", O_RDONLY|O_CLOEXEC) = 3
+[pid  1858] fstat(3, {st_mode=S_IFDIR|0755, st_size=512, ...}) = 0
+[pid  1858] close(3)                    = 0
+[pid  1858] openat(AT_FDCWD, "/usr/lib/locale/C.UTF-8/LC_MESSAGES/SYS_LC_MESSAGES", O_RDONLY|O_CLOEXEC) = 3
+[pid  1858] fstat(3, {st_mode=S_IFREG|0644, st_size=48, ...}) = 0
+[pid  1858] mmap(NULL, 48, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7fe1d106a000
+[pid  1858] close(3)                    = 0
+[pid  1858] openat(AT_FDCWD, "/usr/lib/locale/C.UTF-8/LC_MONETARY", O_RDONLY|O_CLOEXEC) = 3
+[pid  1858] fstat(3, {st_mode=S_IFREG|0644, st_size=270, ...}) = 0
+[pid  1858] mmap(NULL, 270, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7fe1d1069000
+[pid  1858] close(3)                    = 0
+[pid  1858] openat(AT_FDCWD, "/usr/lib/locale/C.UTF-8/LC_COLLATE", O_RDONLY|O_CLOEXEC) = 3
+[pid  1858] fstat(3, {st_mode=S_IFREG|0644, st_size=1516558, ...}) = 0
+[pid  1858] mmap(NULL, 1516558, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7fe1d088d000
+[pid  1858] close(3)                    = 0
+[pid  1858] openat(AT_FDCWD, "/usr/lib/locale/C.UTF-8/LC_TIME", O_RDONLY|O_CLOEXEC) = 3
+[pid  1858] fstat(3, {st_mode=S_IFREG|0644, st_size=3360, ...}) = 0
+[pid  1858] mmap(NULL, 3360, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7fe1d1068000
+[pid  1858] close(3)                    = 0
+[pid  1858] openat(AT_FDCWD, "/usr/lib/locale/C.UTF-8/LC_NUMERIC", O_RDONLY|O_CLOEXEC) = 3
+[pid  1858] fstat(3, {st_mode=S_IFREG|0644, st_size=50, ...}) = 0
+[pid  1858] mmap(NULL, 50, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7fe1d1067000
+[pid  1858] close(3)                    = 0
+[pid  1858] openat(AT_FDCWD, "/usr/lib/locale/C.UTF-8/LC_CTYPE", O_RDONLY|O_CLOEXEC) = 3
+[pid  1858] fstat(3, {st_mode=S_IFREG|0644, st_size=199772, ...}) = 0
+[pid  1858] mmap(NULL, 199772, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7fe1d102f000
+[pid  1858] close(3)                    = 0
+[pid  1858] access("/var/run/utmpx", F_OK) = -1 ENOENT (No such file or directory)
+[pid  1858] openat(AT_FDCWD, "/var/run/utmp", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+[pid  1858] access("/var/run/utmpx", F_OK) = -1 ENOENT (No such file or directory)
+[pid  1858] openat(AT_FDCWD, "/var/run/utmp", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+[pid  1858] close(1)                    = 0
+[pid  1857] <... read resumed> "", 16384) = 0
+[pid  1858] close(2 <unfinished ...>
+[pid  1857] fstat(1, {st_mode=S_IFCHR|0620, st_rdev=makedev(136, 0), ...}) = 0
+[pid  1858] <... close resumed> )       = 0
+[pid  1857] write(1, "0\n", 20
+)          = 2
+[pid  1858] exit_group(0 <unfinished ...>
+[pid  1857] close(0 <unfinished ...>
+[pid  1858] <... exit_group resumed>)   = ?
+[pid  1857] <... close resumed> )       = 0
+[pid  1858] +++ exited with 0 +++
+close(1)                                = 0
+close(2)                                = 0
+exit_group(0)                           = ?
++++ exited with 0 +++

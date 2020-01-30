@@ -36,6 +36,8 @@ int main(int argc, char **argv)
         0,                              // тип принимаемого сообщения неважен
         MSG_NOERROR | IPC_NOWAIT);      // получить столько сколько поместится + не блокировать процесс если сообщений нет
 
+    msgctl(mq_id, IPC_RMID, NULL);
+
     int fd = open(fileName, O_WRONLY);
     ssize_t n_write = write(fd, msg.mtext, n_msgrcv);
 

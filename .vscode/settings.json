@@ -5,6 +5,9 @@
         "types.h": "c",
         "ev.h": "c",
         "iostream": "cpp",
-        "signal.h": "c"
+        "signal.h": "c",
+        "*.ipp": "c",
+        "*.tcc": "c",
+        "fstream": "c"
     }
 }

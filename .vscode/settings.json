@@ -8,6 +8,7 @@
         "signal.h": "c",
         "*.ipp": "c",
         "*.tcc": "c",
-        "fstream": "c"
+        "fstream": "c",
+        "sem.h": "c"
     }
 }

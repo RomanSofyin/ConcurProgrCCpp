@@ -1,2 +1,2 @@
 all:
-	gcc -o posix_shm posix_shm.c
+	gcc -o posix_shm posix_shm.c -lrt

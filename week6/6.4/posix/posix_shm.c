@@ -1,6 +1,8 @@
 #include <stdio.h>
-#include <sys/ipc.h>
-#include <sys/shm.h>
+#include <sys/types.h>
+#include <sys/mman.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
 /* Создайте общую память POSIX с именем:
    /test.shm
@@ -8,57 +10,58 @@
    Размер сегмента должен быть 1 мегабайт. Заполните каждый байт числом 13. */
 
 #define MB          1024*1024
-#define N_MB        8
+#define N_MB        1
+#define SHM_SEG_LEN N_MB * MB 
 
 int main(int argc, char **argv)
 {
-    const char * pathName = "/tmp/mem.temp";
+    const char * name   = "/test.shm";
+    int fflags          = O_CREAT | O_RDWR | O_TRUNC;
+    mode_t fmode        = S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH; // 0666
+    int fd;
 
-    key_t key;
-    if ((key = ftok(pathName, 1)) == -1) {
-        perror("ftok failure");
+    if ((fd = shm_open(name, fflags, fmode)) == -1) {
+        perror("shm_open failure");
         return -1;
     } else {
-        printf("ftok succeeded, key=%d\n", key);
+        printf("shm_open succeeded, fd=%d\n", fd);
     }
-
-    int shm_id;
-    if ((shm_id = shmget(key, N_MB * MB, IPC_CREAT | 0660)) == -1) {
-        perror("shmget failure");
-        return -1;
-    } else {
-        printf("shmget succeeded, shm_id=%d\n", shm_id);
-    }
-
+ 
+    int mprot   = PROT_READ | PROT_WRITE;
+    int mflags  = MAP_SHARED;
     void * p_shm;
-    if ((p_shm = shmat(shm_id, NULL, 0)) == (void *) -1) {
-        perror("shmat failure");
-        return -1;
-    } else {
-        printf("shmat succeeded, p_shm=%p\n", p_shm);
-    }
     
+    // Getting the error here: "mmap failure: Exec format error"
+    // Possibly a WSL issue, google to sort out.
+    if ((p_shm = mmap( NULL /*(void*) (4096 * 4)*/, SHM_SEG_LEN, mprot, mflags, fd, 0)) == MAP_FAILED) {
+        perror("mmap failure");
+        return -1;
+    } else {
+        printf("mmap succeeded, p_shm=%p\n", p_shm);
+    }
+
     /* здесь мы пишем в Shared Memory Segment */
-    int * p_shm_int;
-    for (int i = 0; i < N_MB; i++) {
-        p_shm_int = (int *) (p_shm + i * MB);
-        *p_shm_int = 42;
-        printf("Written to p_shm_int=%p, i=%d\n", p_shm_int, i);
+    char * p_shm_char;
+    char byte = 13;
+    for (size_t i = 0; i < SHM_SEG_LEN; i++) {
+        p_shm_char = (char *) (p_shm + i);
+        *p_shm_char = byte;
+        if (!(i % 256))
+            printf("Written to p_shm_int=%p, i=%zu\n", p_shm_char, i);
     }
 
-    int rc;
-    if ((rc = shmdt(p_shm)) == -1) {
-        perror("shmdt failure");
+    if (munmap(p_shm, SHM_SEG_LEN) == -1) {
+        perror("munmap failure");
         return -1;
     } else {
-        printf("shmdt succeeded, rc=%d\n", rc);
+        printf("munmap succeeded\n");
     }
 
-    if (shmctl(shm_id, IPC_RMID, NULL) == -1) {
-        perror("shmctl IPC_RMID failure");
+    if (shm_unlink(name) == -1) {
+        perror("shm_unlink failure");
         return -1;
     } else {
-        printf("shmctl IPC_RMID succeeded\n");
+        printf("shm_unlink succeeded\n");
     }
 
     return 0;

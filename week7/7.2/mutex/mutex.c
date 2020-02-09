@@ -16,6 +16,9 @@ void*   thread_wrlock(void * arg);
 struct s_locks {
     pthread_mutex_t     mutex;
     pthread_spinlock_t  spinlock;
+    // Note: it should be enought one pthread_rwlock_t here;
+    // we need to call pthread_rwlock_wrlock() in main thread first, then both child threads
+    // will be waiting when call their respective pthread_rwlock_rdlock/pthread_rwlock_wrlock.
     pthread_rwlock_t    rdlock;
     pthread_rwlock_t    wrlock;
 };
@@ -55,9 +58,8 @@ int main(int argc, char **argv)
     pthread_spin_lock(p_spinlock);
     pthread_create(&t_spinlock, NULL, thread_spinlock, p_spinlock);
     
-    // ToDo: thread_rdlock doesn't 
     printf("main: creating the thread_rdlock\n");
-    pthread_rwlock_wrlock(&locks.rdlock);
+    pthread_rwlock_wrlock(&locks.rdlock);   // we do WRITE lock here to make thread_rdlock waiting on locks.rdlock
     pthread_create(&t_rdlock, NULL, thread_rdlock, &locks.rdlock);    
     
     printf("main: creating the thread_wrlock\n");
